@@ -1,17 +1,32 @@
 from backend.app.security.scanner import RuleScanner
+from backend.app.security.policy_loader import PolicyLoader
 
 
 class SecurityManager:
 
     def __init__(self):
+
         self.scanner = RuleScanner()
+        self.policy_loader = PolicyLoader()
+
+    def reload_policies(self):
+
+        self.policy_loader.reload_if_changed()
 
     def validate_prompt(self, prompt: str) -> None:
 
-        if not self.scanner.scan_prompt(prompt):
-            raise ValueError("Prompt blocked by security rules")
+        self.reload_policies()
+
+        rules = self.policy_loader.get_prompt_rules()
+
+        if not self.scanner.scan(prompt, rules):
+            raise ValueError("Prompt blocked by policy")
 
     def validate_output(self, output: str) -> None:
 
-        if not self.scanner.scan_output(output):
-            raise ValueError("Output blocked by security rules")
+        self.reload_policies()
+
+        rules = self.policy_loader.get_output_rules()
+
+        if not self.scanner.scan(output, rules):
+            raise ValueError("Output blocked by policy")

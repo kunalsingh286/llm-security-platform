@@ -11,17 +11,17 @@ The platform acts as a secure gateway between client applications and LLM backen
 ## Core Capabilities
 
 - Centralized LLM API Gateway
-- Rule-Based Prompt Filtering
+- Policy-as-Code Security Engine
+- Dynamic Rule Reloading
 - Output Safety Enforcement
 - Violation Logging
-- Policy-Ready Architecture
 - Multi-Model Routing (Ollama)
 
 ---
 
 ## Architecture
 
-Client → Security Platform → LLM Backend → Security Platform → Client
+Client → Policy Engine → LLM Backend → Policy Engine → Client
 
 ---
 
@@ -52,7 +52,7 @@ llm-security-platform/
 
 ## Status
 
-Phase 2: Rule-Based Security Layer (Completed)
+Phase 3: Policy Engine (Completed)
 
 ---
 

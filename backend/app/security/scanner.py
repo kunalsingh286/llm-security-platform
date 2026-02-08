@@ -1,28 +1,19 @@
-from backend.app.security.rules import PROMPT_BLOCKLIST, OUTPUT_BLOCKLIST
-
-
 class RuleScanner:
 
-    def scan_prompt(self, prompt: str) -> bool:
+    def scan(self, text: str, rules: dict) -> bool:
         """
-        Returns True if prompt is safe
+        Returns True if safe
         """
-        text = prompt.lower()
 
-        for pattern in PROMPT_BLOCKLIST:
-            if pattern in text:
-                return False
+        if not rules.get("enabled", True):
+            return True
 
-        return True
+        content = text.lower()
 
-    def scan_output(self, output: str) -> bool:
-        """
-        Returns True if output is safe
-        """
-        text = output.lower()
+        blocklist = rules.get("blocklist", [])
 
-        for pattern in OUTPUT_BLOCKLIST:
-            if pattern in text:
+        for pattern in blocklist:
+            if pattern in content:
                 return False
 
         return True
