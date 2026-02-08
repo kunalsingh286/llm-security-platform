@@ -2,7 +2,7 @@
 
 ## Overview
 
-LLM Security Platform is an open-source, production-grade security and governance layer for Large Language Models. It provides centralized protection against prompt injection, data leakage, and policy violations while enabling auditability and red-team evaluation.
+LLM Security Platform is an open-source, production-grade security and governance layer for Large Language Models. It provides centralized protection against prompt injection, data leakage, and policy violations while enabling auditability, monitoring, and red-team evaluation.
 
 The platform acts as a secure gateway between client applications and LLM backends.
 
@@ -18,15 +18,16 @@ The platform acts as a secure gateway between client applications and LLM backen
 - Automatic PII & Secret Redaction
 - Red-Team Attack Simulation
 - Defense Scoring System
-- Violation Logging
+- Persistent Audit Logging
+- Searchable Security Events
 - Multi-Model Routing (Ollama)
 
 ---
 
 ## Architecture
 
-Client → Security → LLM → DLP → Client  
-Red Team → Gateway → Security → Report
+Client → Security → LLM → DLP → Audit DB → Client  
+Red Team → Gateway → Audit → Reports
 
 ---
 
@@ -35,7 +36,7 @@ Red Team → Gateway → Security → Report
 - Backend: FastAPI, Python
 - Models: Ollama (LLaMA3, DeepSeek, Mistral)
 - ML: Transformers, PyTorch, HuggingFace
-- Storage: PostgreSQL, Redis
+- Storage: SQLite (Audit), PostgreSQL (Optional), Redis
 - Infra: Docker, Prometheus
 - UI: React, Tailwind
 
@@ -57,7 +58,7 @@ llm-security-platform/
 
 ## Status
 
-Phase 6: Red Team Framework (Completed)
+Phase 7: Audit Logs & Observability (Completed)
 
 ---
 
