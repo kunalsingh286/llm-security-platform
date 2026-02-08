@@ -11,9 +11,10 @@ The platform acts as a secure gateway between client applications and LLM backen
 ## Core Capabilities
 
 - Centralized LLM API Gateway
-- Policy-as-Code Security Engine
-- Dynamic Rule Reloading
-- Output Safety Enforcement
+- Policy-as-Code Engine
+- ML-Based Injection Detection
+- LLM-as-Judge Security
+- Ensemble Risk Analysis
 - Violation Logging
 - Multi-Model Routing (Ollama)
 
@@ -21,7 +22,7 @@ The platform acts as a secure gateway between client applications and LLM backen
 
 ## Architecture
 
-Client → Policy Engine → LLM Backend → Policy Engine → Client
+Client → Rules → ML Engine → LLM → ML Engine → Client
 
 ---
 
@@ -29,7 +30,7 @@ Client → Policy Engine → LLM Backend → Policy Engine → Client
 
 - Backend: FastAPI, Python
 - Models: Ollama (LLaMA3, DeepSeek, Mistral)
-- ML: HuggingFace, spaCy, PyTorch
+- ML: Transformers, PyTorch, HuggingFace
 - Storage: PostgreSQL, Redis
 - Infra: Docker, Prometheus
 - UI: React, Tailwind
@@ -52,7 +53,7 @@ llm-security-platform/
 
 ## Status
 
-Phase 3: Policy Engine (Completed)
+Phase 4: ML Security Intelligence (Completed)
 
 ---
 
