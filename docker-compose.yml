@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+
+  backend:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.backend
+    container_name: llm-security-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./audit.db:/app/audit.db
+    restart: always
+    depends_on:
+      - ollama
+
+  frontend:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.frontend
+    container_name: llm-security-dashboard
+    ports:
+      - "5173:5173"
+    restart: always
+    depends_on:
+      - backend
+
+  ollama:
+    image: ollama/ollama
+    container_name: llm-security-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: always
+
+volumes:
+  ollama_data:

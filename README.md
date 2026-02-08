@@ -19,7 +19,8 @@ The platform acts as a secure gateway between client applications and LLM backen
 - Red-Team Attack Simulation
 - Defense Scoring System
 - Persistent Audit Logging
-- Searchable Security Events
+- Real-Time Admin Dashboard
+- Security Analytics
 - Multi-Model Routing (Ollama)
 
 ---
@@ -27,13 +28,14 @@ The platform acts as a secure gateway between client applications and LLM backen
 ## Architecture
 
 Client → Security → LLM → DLP → Audit DB → Client  
-Red Team → Gateway → Audit → Reports
+Dashboard → Audit API → Analytics
 
 ---
 
 ## Tech Stack
 
 - Backend: FastAPI, Python
+- Frontend: React, Tailwind, Recharts
 - Models: Ollama (LLaMA3, DeepSeek, Mistral)
 - ML: Transformers, PyTorch, HuggingFace
 - Storage: SQLite (Audit), PostgreSQL (Optional), Redis
@@ -49,7 +51,7 @@ llm-security-platform/
 ├── ml/
 ├── policies/
 ├── redteam/
-├── dashboard/
+├── dashboard-ui/
 ├── infra/
 ├── docs/
 └── README.md
@@ -58,7 +60,7 @@ llm-security-platform/
 
 ## Status
 
-Phase 7: Audit Logs & Observability (Completed)
+Phase 8: Admin Dashboard (Completed)
 
 ---
 
