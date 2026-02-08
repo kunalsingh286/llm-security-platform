@@ -30,7 +30,7 @@ class SecurityManager:
 
         if analysis["final_risk"]:
             raise ValueError(
-                f"Prompt blocked by ML engine (score={analysis['ml_score']:.2f})"
+                f"Prompt blocked (risk={analysis['risk_score']:.2f})"
             )
 
     def validate_output(self, output: str) -> None:
