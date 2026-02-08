@@ -11,12 +11,10 @@ The platform acts as a secure gateway between client applications and LLM backen
 ## Core Capabilities
 
 - Centralized LLM API Gateway
-- Prompt Injection Detection
-- Output Policy Enforcement
-- Data Leakage Prevention
-- Red-Team Testing Framework
-- Audit Logging and Monitoring
-- Policy-as-Code Engine
+- Rule-Based Prompt Filtering
+- Output Safety Enforcement
+- Violation Logging
+- Policy-Ready Architecture
 - Multi-Model Routing (Ollama)
 
 ---
@@ -54,7 +52,7 @@ llm-security-platform/
 
 ## Status
 
-Phase 0: Foundation Setup (In Progress)
+Phase 2: Rule-Based Security Layer (Completed)
 
 ---
 
