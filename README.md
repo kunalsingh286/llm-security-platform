@@ -16,7 +16,8 @@ The platform acts as a secure gateway between client applications and LLM backen
 - LLM-as-Judge Security
 - Data Loss Prevention (DLP)
 - Automatic PII & Secret Redaction
-- Ensemble Risk Analysis
+- Red-Team Attack Simulation
+- Defense Scoring System
 - Violation Logging
 - Multi-Model Routing (Ollama)
 
@@ -24,7 +25,8 @@ The platform acts as a secure gateway between client applications and LLM backen
 
 ## Architecture
 
-Client → Security → LLM → DLP → Client
+Client → Security → LLM → DLP → Client  
+Red Team → Gateway → Security → Report
 
 ---
 
@@ -55,7 +57,7 @@ llm-security-platform/
 
 ## Status
 
-Phase 5: Data Leakage Prevention (Completed)
+Phase 6: Red Team Framework (Completed)
 
 ---
 
