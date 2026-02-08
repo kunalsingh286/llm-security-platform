@@ -14,6 +14,8 @@ The platform acts as a secure gateway between client applications and LLM backen
 - Policy-as-Code Engine
 - ML-Based Injection Detection
 - LLM-as-Judge Security
+- Data Loss Prevention (DLP)
+- Automatic PII & Secret Redaction
 - Ensemble Risk Analysis
 - Violation Logging
 - Multi-Model Routing (Ollama)
@@ -22,7 +24,7 @@ The platform acts as a secure gateway between client applications and LLM backen
 
 ## Architecture
 
-Client → Rules → ML Engine → LLM → ML Engine → Client
+Client → Security → LLM → DLP → Client
 
 ---
 
@@ -53,7 +55,7 @@ llm-security-platform/
 
 ## Status
 
-Phase 4: ML Security Intelligence (Completed)
+Phase 5: Data Leakage Prevention (Completed)
 
 ---
 

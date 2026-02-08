@@ -6,12 +6,15 @@ from backend.app.services.ollama_client import OllamaClient
 from backend.app.security.manager import SecurityManager
 from backend.app.security.logger import SecurityLogger
 
+from backend.app.dlp.manager import DLPManager
+
 
 router = APIRouter()
 
 ollama = OllamaClient()
 security = SecurityManager()
 logger = SecurityLogger()
+dlp = DLPManager()
 
 
 @router.post("/chat", response_model=ChatResponse)
@@ -20,7 +23,7 @@ def chat(request: ChatRequest):
     if not request.prompt.strip():
         raise HTTPException(status_code=400, detail="Prompt is empty")
 
-    # 1. Check prompt
+    # 1. Prompt security
     try:
         security.validate_prompt(request.prompt)
 
@@ -45,7 +48,7 @@ def chat(request: ChatRequest):
 
         raise HTTPException(status_code=500, detail=str(e))
 
-    # 3. Check output
+    # 3. Output security
     try:
 
         security.validate_output(result)
@@ -59,4 +62,13 @@ def chat(request: ChatRequest):
             detail="LLM output blocked by security policy"
         )
 
-    return ChatResponse(response=result)
+    # 4. DLP processing
+    dlp_result = dlp.process(result)
+
+    if dlp_result["redacted"]:
+        logger.log_violation(
+            "DLP",
+            f"Sensitive data redacted: {dlp_result['violations']}"
+        )
+
+    return ChatResponse(response=dlp_result["output"])
