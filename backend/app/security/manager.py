@@ -29,7 +29,9 @@ class SecurityManager:
         analysis = self.ml_engine.analyze_prompt(prompt)
 
         if analysis["final_risk"]:
-            raise ValueError("Prompt blocked by ML security engine")
+            raise ValueError(
+                f"Prompt blocked by ML engine (score={analysis['ml_score']:.2f})"
+            )
 
     def validate_output(self, output: str) -> None:
 

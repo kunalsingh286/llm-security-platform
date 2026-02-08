@@ -11,16 +11,23 @@ class MLSecurityEngine:
 
     def analyze_prompt(self, prompt: str) -> dict:
 
-        ml_result = self.classifier.predict(prompt)
-        is_ml_risky = self.classifier.is_malicious(prompt)
+        ml_score = self.classifier.risk_score(prompt)
+        ml_flag = self.classifier.is_malicious(prompt)
 
-        llm_verdict = self.judge.judge(prompt)
+        llm_flag = self.judge.judge(prompt)
 
-        final_risk = is_ml_risky or llm_verdict
+        # Voting logic
+        votes = sum([
+            1 if ml_flag else 0,
+            1 if llm_flag else 0
+        ])
+
+        final_risk = votes >= 1   # Any one system can block
 
         return {
-            "ml_scores": ml_result,
-            "ml_flag": is_ml_risky,
-            "llm_flag": llm_verdict,
+            "ml_score": ml_score,
+            "ml_flag": ml_flag,
+            "llm_flag": llm_flag,
+            "votes": votes,
             "final_risk": final_risk
         }

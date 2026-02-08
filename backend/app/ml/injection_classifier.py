@@ -14,6 +14,8 @@ class InjectionClassifier:
             "prompt injection",
             "jailbreak attempt",
             "malicious instruction",
+            "roleplay bypass",
+            "system override",
             "normal request"
         ]
 
@@ -24,20 +26,22 @@ class InjectionClassifier:
             self.labels
         )
 
-        scores = dict(
+        return dict(
             zip(result["labels"], result["scores"])
         )
 
-        return scores
-
-    def is_malicious(self, text: str, threshold: float = 0.6) -> bool:
+    def risk_score(self, text: str) -> float:
 
         scores = self.predict(text)
 
-        risk_score = max(
+        return max(
             scores.get("prompt injection", 0),
             scores.get("jailbreak attempt", 0),
-            scores.get("malicious instruction", 0)
+            scores.get("malicious instruction", 0),
+            scores.get("roleplay bypass", 0),
+            scores.get("system override", 0)
         )
 
-        return risk_score >= threshold
+    def is_malicious(self, text: str, threshold: float = 0.4) -> bool:
+
+        return self.risk_score(text) >= threshold
