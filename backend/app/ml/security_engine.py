@@ -1,3 +1,5 @@
+import os
+
 from backend.app.ml.injection_classifier import InjectionClassifier
 from backend.app.ml.llm_judge import LLMJudge
 from backend.app.ml.intent_classifier import IntentClassifier
@@ -7,31 +9,46 @@ class MLSecurityEngine:
 
     def __init__(self):
 
-        self.injector = InjectionClassifier()
+        self.enable_ml = os.getenv("ENABLE_ML", "true") == "true"
+
+        self.injector = None
+        self.intent = None
+
+        if self.enable_ml:
+            try:
+                self.injector = InjectionClassifier()
+                self.intent = IntentClassifier()
+            except Exception:
+                self.enable_ml = False
+
         self.judge = LLMJudge()
-        self.intent = IntentClassifier()
 
     def analyze_prompt(self, prompt: str) -> dict:
 
-        risk_score = self.injector.risk_score(prompt)
-        ml_flag = self.injector.is_malicious(prompt)
+        risk_score = 0.0
+        ml_flag = False
+        safe_intent = True
+
+        if self.enable_ml and self.injector and self.intent:
+
+            try:
+                risk_score = self.injector.risk_score(prompt)
+                ml_flag = self.injector.is_malicious(prompt)
+                safe_intent = self.intent.is_safe(prompt)
+
+            except Exception:
+                pass
 
         llm_flag = self.judge.judge(prompt)
 
-        safe_intent = self.intent.is_safe(prompt)
-
-        # Weighted decision
         final_risk = False
 
-        # High confidence attack
         if risk_score >= 0.6:
             final_risk = True
 
-        # Judge + ML agree
         elif ml_flag and llm_flag:
             final_risk = True
 
-        # Judge says risky and not safe intent
         elif llm_flag and not safe_intent:
             final_risk = True
 

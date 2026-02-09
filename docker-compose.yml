@@ -11,6 +11,10 @@ services:
       - "8000:8000"
     volumes:
       - ./audit.db:/app/audit.db
+    environment:
+      - OLLAMA_URL=http://ollama:11434
+      - OLLAMA_TIMEOUT=300
+      - ENABLE_ML=false
     restart: always
     depends_on:
       - ollama

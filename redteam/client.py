@@ -19,7 +19,7 @@ class GatewayClient:
             res = requests.post(
                 self.url,
                 json=payload,
-                timeout=60
+                timeout=120
             )
 
             return {
